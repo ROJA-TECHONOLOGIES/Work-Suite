@@ -1,58 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:work_suite/util/swatch_colors.dart';
 
 class Background extends StatelessWidget {
-  final double? width;
-  final List<Color>? colorsGradient;
-  final String? heroTag;
-  final double? borderRadius;
-  final Widget? child;
+  final double width;
 
-  Background({this.width, this.colorsGradient, this.heroTag, this.borderRadius, this.child, Key? key});
+
+  const Background({required this.width, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Widget _child = Container();
-    if (child != null) {
-      _child = child!;
-    }
-    var _borderRadius = 0.0;
-    if (borderRadius != null) {
-      _borderRadius = borderRadius!;
-    }
-    String _heroTag = UniqueKey().toString();
-    if (heroTag != null) {
-      _heroTag = heroTag!;
-    }
 
-    var _width = 300.0;
-    if (width != null) {
-      _width = width!;
-    }
+    var _width = width;
 
-   var _colorsGradient = const [Color.fromARGB(255, 33, 206, 186), Color.fromARGB(255, 172, 229, 184), Color.fromARGB(255, 172, 229, 184)];
-    if (colorsGradient != null) {
-      _colorsGradient = colorsGradient!;
-    }
+    final theme = Theme.of(context);
+    final color = SwatchColors().lightPrimarySwatch;
 
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
           decoration: BoxDecoration(
-            color: const Color(0xff22A45D),
-            // gradient: new LinearGradient(
-            //   // begin: Alignment.topRight,
-            //   // end: Alignment.bottomLeft,
-            //   colors: _colorsGradient,
-            // ),
-            borderRadius: BorderRadius.circular(_borderRadius),
-            // boxShadow: [
-            //   BoxShadow(
-            //     color: Colors.grey.withOpacity(0.1),
-            //     spreadRadius: 3,
-            //     blurRadius: 5,
-            //     offset: Offset(3, 3),
-            //   ),
-            // ],
+            color: theme.primaryColor,
           ),
           child: Stack(
             children: <Widget>[
@@ -64,8 +31,8 @@ class Background extends StatelessWidget {
                   right: -_width*0.4,
                   child: Container(
                     decoration: const BoxDecoration(
-                      // color: Color(0x20FFFFFF),
                       shape: BoxShape.circle,
+                      color: Color(0x10FFFFFF),
                     ),
                   )),
 
@@ -76,8 +43,8 @@ class Background extends StatelessWidget {
                   left: -_width*0.1,
                   child: Container(
                     decoration: const BoxDecoration(
-                      // color: Color(0x0AFFFFFF),
                       shape: BoxShape.circle,
+                      color: Color(0x10FFFFFF),
                     ),
                   )),
 
@@ -95,59 +62,47 @@ class Background extends StatelessWidget {
           Positioned(
             top: 70,
             left: 10,
-            child: UnconstrainedBox(
-                  child: SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset("assets/images/star.png",
-                          fit: BoxFit.contain, color: Colors.yellow.withAlpha(80),
-                      )
-                  ))),
+            child: SizedBox(
+                height: 20,
+                width: 20,
+                child: Image.asset("assets/images/star.png",
+                    fit: BoxFit.contain, color: color.shade500,
+                )
+            )),
 
               Positioned(
                   bottom: 20,
                   left: _width*0.2,
-                  child: UnconstrainedBox(
-                      child: SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: Image.asset("assets/images/star.png",
-                            fit: BoxFit.contain, color: Colors.yellow,
-                          )
-                      ))),
+                  child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset("assets/images/star.png",
+                        fit: BoxFit.contain, color: color.shade600,
+                      )
+                  )),
 
               Positioned(
                   bottom: 10,
                   left: _width*0.7,
-                  child: UnconstrainedBox(
-                      child: SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: Image.asset("assets/images/star.png",
-                            fit: BoxFit.contain, color: Colors.yellow.withAlpha(90),
-                          )
-                      ))),
+                  child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset("assets/images/star.png",
+                        fit: BoxFit.contain, color: color.shade500,
+                      )
+                  )),
 
               Positioned(
                   top: 20,
                   left: _width*0.5,
-                  child: UnconstrainedBox(
-                      child: SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: Image.asset("assets/images/star.png",
-                            fit: BoxFit.contain, color: Colors.yellow.withAlpha(80),
-                          )
-                      ))),
+                  child: SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset("assets/images/star.png",
+                        fit: BoxFit.contain, color: color.shade500,
+                      )
+                  )),
 
-
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
-                    child: _child,
-                  )
-              ),
             ],
           )
       ),

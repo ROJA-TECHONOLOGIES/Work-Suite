@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:work_suite/util/swatch_colors.dart';
 import 'package:work_suite/widgets/background_splash.dart';
 import 'package:work_suite/widgets/splash_image.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -13,12 +16,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _startNextScreen(){
     // route.setDuration(1);
-    // route.pushToStart(context, "/onboard");
     Beamer.of(context).beamToNamed('/login');
   }
 
-  var windowWidth;
-  var windowHeight;
 
   @override
   void initState() {
@@ -26,54 +26,41 @@ class _SplashScreenState extends State<SplashScreen> {
     startTime();
   }
 
-  startTime() async {
-    const duration = Duration(hours: 3);
+  startTime(){
+    const duration = Duration(seconds: 5);
     return Timer(duration, _startNextScreen);
   }
 
   @override
   Widget build(BuildContext context) {
-    windowWidth = MediaQuery.of(context).size.width;
-    windowHeight = MediaQuery.of(context).size.height;
+    final windowWidth = MediaQuery.of(context).size.width;
+    final windowHeight = MediaQuery.of(context).size.height;
+
+    final color = SwatchColors().lightPrimarySwatch;
     return Scaffold(
-      body: initScreen(context),
-    );
+      body:  Stack(
+        children: <Widget>[
+          Background(width: windowWidth),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                splashImage(),
 
-  }
-
-  initScreen(BuildContext context) {
-    Color colorPrimary = const Color(0xff009688);
-    return Scaffold(
-        body:
-        Stack(
-          children: <Widget>[
-
-            Container(
-              color: Colors.white,
-            ),
-
-            Background(width: windowWidth, colorsGradient: [Color.fromARGB(
-                80, colorPrimary.red, colorPrimary.green, colorPrimary.blue), colorPrimary]),
-
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  splashImage(),
-                  const Padding(padding: EdgeInsets.only(top: 20.0)),
-                  const CircularProgressIndicator(
-                    backgroundColor: Colors.green,
+               Padding(
+                 padding: const EdgeInsets.only(top: 50),
+                 child: CircularProgressIndicator(
+                    backgroundColor: color.shade700,
                     strokeWidth: 1,
-                  )
-                ],
-              ),
+                  ),
+               )
+              ],
             ),
-
-
-          ],
-        )
-
+          ),
+        ],
+      ),
     );
+
   }
 
 }
