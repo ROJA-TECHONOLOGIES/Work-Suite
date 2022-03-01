@@ -1,30 +1,48 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:work_suite/util/app_colors.dart';
+import 'screens/screens_util.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(WorkSuiteApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class WorkSuiteApp extends StatelessWidget {
+  WorkSuiteApp({Key? key}) : super(key: key);
 
+  final routeDelegate = BeamerDelegate(
+      initialPath: '/',
+      locationBuilder: SimpleLocationBuilder(
+        routes: {
+          '/' : (context) => SplashScreen(),
+          '/login' : (context) =>  LogInScreen(),
+          '/mainDashboard' : (context) => const DashBoard(),
+          '/dashBoardScreens' : (context){
+
+            Map<String, dynamic> selectedScreen = context.currentBeamLocation.state.data;
+            int value = selectedScreen['index'];
+
+            switch(value){
+              case 0 :
+                return const DashBoardScreen();
+              case 1 :
+                return SplashScreen();
+              default:
+                return LogInScreen();
+            }
+          }
+        }
+      )
+  );
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      theme: lightThemeData,
+      debugShowCheckedModeBanner: false,
+      routerDelegate: routeDelegate,
+      routeInformationParser: BeamerParser(),
     );
   }
 }
