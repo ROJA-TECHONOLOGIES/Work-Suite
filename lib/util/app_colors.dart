@@ -34,7 +34,7 @@ final lightThemeData = ThemeData(
     ),
     textTheme: TextTheme(
         headline5: TextStyle(fontFamily: 'Messiri', fontWeight: FontWeight.bold, color: Color(mainColorValues.secondaryColor)),
-        headline6: TextStyle(color: Color(mainColorValues.secondaryColor)),
+        headline6: TextStyle(fontFamily: 'Messiri', color: Color(mainColorValues.secondaryColor)),
         subtitle1: TextStyle(fontFamily: 'Messiri', fontSize: 18, color: Color(mainColorValues.secondaryColor)),
         subtitle2: TextStyle(fontFamily: 'Messiri', fontSize: 16,fontWeight: FontWeight.bold, color: Color(mainColorValues.secondaryColor)),
         bodyText1: TextStyle(fontFamily: 'Messiri', fontSize: 14, color: Color(mainColorValues.secondaryColor))

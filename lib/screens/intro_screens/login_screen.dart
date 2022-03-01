@@ -1,203 +1,99 @@
 import 'package:flutter/material.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:beamer/beamer.dart';
+import 'package:work_suite/widgets/text_field.dart';
 
 class LogInScreen extends StatelessWidget {
   LogInScreen({Key? key}) : super(key: key);
 
-  final phoneController = TextEditingController();
+  final idController = TextEditingController();
   final pinController = TextEditingController();
   final forgotPinController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
+    final theme = Theme.of(context);
+
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Colors.white, Colors.blue]),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 20.0, vertical: 40.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              const SizedBox(height: 50.0),
+              Text(
+                'Login',
+                style: theme.textTheme.headline5,
               ),
-            ),
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 40.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 40.0,
-                      width: 40.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back_ios,
-                            color: Colors.blue[900], size: 25.0),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
+              const SizedBox(height: 10.0),
+             Text(
+                'Kindly Use Your Employee Number and Password',
+                style: theme.textTheme.headline6,
+              ),
+              const SizedBox(height: 30.0),
+              customTextField(
+                  firstIcon: Icons.account_circle_outlined,
+                  controller: idController,
+                  text: "Employee Number",
+                  showSuffix: false,
+                  color: theme.primaryColor,
+                  hideText: false),
+              const SizedBox(
+                height: 20.0,
+              ),
+              customTextField(
+                  firstIcon: Icons.lock_outline_rounded,
+                  controller: pinController,
+                  text: "Password",
+                  showSuffix: false,
+                  color: theme.primaryColor,
+                  hideText: true),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // forgotPinAlert(context);
+                      // Fluttertoast.showToast(
+                      //     msg: "Feature Coming Soon");
+                      // Navigator.push(context,MaterialPageRoute(builder:(context)=>ForgotPinScreen()));
+                    },
+                    child: Text(
+                      'Forgot PIN ?',
+                      style: theme.textTheme.headline6,
                     ),
-                    const SizedBox(height: 50.0),
-                    Text(
-                      'Login',
-                      style: TextStyle(
-                          color: Colors.blue[900],
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40.0),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 50.0,
+              ),
+              // isLoad && finishLoading ? Center(child: CircularProgressIndicator()) :
+              Center(
+                child: OutlinedButton(
+
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+                    child: Text(
+                      'Log In',
+                      style: theme.textTheme.headline6,
                     ),
-                    const SizedBox(height: 10.0),
-                    const Text(
-                      'Kindly Use your phone number and pin',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20.0),
-                    ),
-                    const SizedBox(height: 30.0),
-                    Container(
-                      height: 70.0,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: Row(
-                        children: [
-                          const Divider(
-                            height: 50.0,
-                          ),
-                          Flexible(
-                            child: SizedBox(
-                              height: 60,
-                              width: 200,
-                              child: TextFormField(
-                                controller: phoneController,
-                                autofocus: true,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: 22),
-                                  hintText: ' \t \t \t Phone Number',
-                                  hintStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      height: 70.0,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5.0)),
-                      child: SizedBox(
-                        height: 60,
-                        width: 200,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: TextField(
-                            maxLength: 4,
-                            maxLengthEnforced: true,
-                            obscureText: true,
-                            obscuringCharacter: '*',
-                            controller: pinController,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter your PIN',
-                              hintStyle: TextStyle(color: Colors.grey),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // forgotPinAlert(context);
-                                // Fluttertoast.showToast(
-                                //     msg: "Feature Coming Soon");
-                                // Navigator.push(context,MaterialPageRoute(builder:(context)=>ForgotPinScreen()));
-                              },
-                              child: Text(
-                                'Forgot PIN?',
-                                style: TextStyle(
-                                    color: Colors.blue[900],
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.0),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    // isLoad && finishLoading ? Center(child: CircularProgressIndicator()) :
-                    Container(
-                      height: 50.0,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.blue[900],
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: TextButton(
-                        child: const Text(
-                          'Sign In',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0),
-                        ),
-                        onPressed: () {
-                          context.beamToNamed('/mainDashboard');
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 10.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FlatButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('phone');
-                          },
-                          child: const Text(
-                            'Register',
-                            style: TextStyle(
-                                fontSize: 18.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                  ),
+                  onPressed: () {
+                    context.beamToNamed('/mainDashboard');
+                  },
                 ),
               ),
-            ),
-          ],
+
+            ],
+          ),
         ),
       ),
     );
