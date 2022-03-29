@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 
 class DashBoardScreen extends StatelessWidget {
@@ -15,12 +16,12 @@ class DashBoardScreen extends StatelessWidget {
               const Text(''),
               Row(
                 children: [
-                  Icon(Icons.notifications_active_rounded),
+                  const Icon(Icons.notifications_active_rounded),
                   IconButton(
                     onPressed: () {
-
+                      context.beamToNamed('/mainDashboard/profile');
                     },
-                    icon: Icon(Icons.account_circle_sharp),
+                    icon: const Icon(Icons.account_circle_sharp),
 
                   )
 

@@ -1,73 +1,83 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:work_suite/blocs/bottom_nav/bottom_nav_bloc.dart';
+import 'package:work_suite/blocs/bottom_nav/bottom_nav_events.dart';
 import 'package:work_suite/screens/dashboard/dashboard_screen.dart';
 import 'package:beamer/beamer.dart';
+import 'package:work_suite/screens/screens_util.dart';
 
 // ignore: must_be_immutable
 class DashBoard extends StatelessWidget {
-  const DashBoard({Key? key}) : super(key: key);
+  DashBoard({Key? key}) : super(key: key);
 
 
-  // final List<Widget> _children = [
-  //   DashBoardScreen(),
-  //   NearByScreen(),
-  //   MedBag(),
-  //   OrdersScreen(),
-  //   PaymentsHistoryScreen()
-  // ];
+  final List<Widget> _children = [
+    const DashBoardScreen(),
+    const LeaveScreen(),
+    const SalaryScreen(),
+    const PayslipScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
+  final theme = Theme.of(context);
 
-      return Scaffold(
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0))
-          ),
-          child: BottomNavigationBar(
-            selectedItemColor: Colors.redAccent,
-            unselectedItemColor: Colors.grey,
-            showUnselectedLabels: true,
-            unselectedLabelStyle: const TextStyle(
-              color: Colors.grey
-            ),
-            onTap: (index){
-              Map<String, int> selectedScreen = {'index' : index};
-             context.beamToNamed('/dashBoardScreens', data: selectedScreen);
-            },
-            // currentIndex: _currentIndex,
-            items: const [
-              // ignore: deprecated_member_use
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                // ignore: deprecated_member_use
-                title: Text('Home'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.location_on_rounded),
-                // ignore: deprecated_member_use
-                title: Text('Near By'),
-              ),
-              BottomNavigationBarItem(
-                icon:
-                    Icon(Icons.shopping_bag),
-                // ignore: deprecated_member_use
-                title: Text('Medicine Bag'),
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.receipt_long_outlined),
-                  // ignore: deprecated_member_use
-                  title: Text('My Orders')
-              ),
-            ],
-          ),
-        ),
-        body: const DashBoardScreen(),
-        // body: _children[currentTab],
+      return BlocBuilder<BottomNavigationBloc, int>(
+          builder: (context, state){
+            // int currentIndex = state;
+            return Scaffold(
+              bottomNavigationBar: Container(
+                decoration:  BoxDecoration(
+                    color: theme.backgroundColor,
+                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0))
+                ),
+                child: BottomNavigationBar(
+                  selectedItemColor: theme.primaryColor,
+                  unselectedItemColor: Colors.grey,
+                  showUnselectedLabels: true,
+                  unselectedLabelStyle: const TextStyle(
+                      color: Colors.grey
+                  ),
+                  onTap: (index){
+                    // Map<String, int> selectedScreen = {'index' : index};
+                    // context.beamToNamed('/dashBoardScreens', data: selectedScreen);
+                    BlocProvider.of<BottomNavigationBloc>(context).add(TappingNavigation(navIndex: index));
 
-      );
+                  },
+                  // currentIndex: _currentIndex,
+                  items: [
+                    // ignore: deprecated_member_use
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home, color: state == 0 ? theme.primaryColor : Colors.grey,),
+                      // ignore: deprecated_member_use
+                      title: const Text('Home'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.casino_outlined, color: state == 1 ? theme.primaryColor : Colors.grey,),
+                      // ignore: deprecated_member_use
+                      title: const Text('Leaves'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon:
+                      Icon(Icons.monetization_on_outlined, color: state == 2 ? theme.primaryColor : Colors.grey,),
+                      // ignore: deprecated_member_use
+                      title: const Text('Salary'),
+                    ),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.receipt_long_outlined, color: state == 3 ? theme.primaryColor : Colors.grey,),
+                        // ignore: deprecated_member_use
+                        title: const Text('Payslips')
+                    ),
+                  ],
+                ),
+              ),
+              // body: const DashBoardScreen(),
+              body: _children[state],
+
+            );
+          });
     }
 
   }
