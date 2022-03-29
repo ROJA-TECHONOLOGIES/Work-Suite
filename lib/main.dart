@@ -23,7 +23,7 @@ class WorkSuiteApp extends StatelessWidget {
         '/': (context) => const SplashScreen(),
         '/login': (context) => LogInScreen(),
         '/mainDashboard': (context) => DashBoard(),
-        '/mainDashboard/profile': (context) => const ProfileScreen()
+        '/mainDashboard/profile': (context) => ProfileScreen()
       }));
 
   // This widget is the root of your application.
